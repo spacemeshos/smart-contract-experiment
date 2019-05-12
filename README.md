@@ -1,2 +1,2 @@
 # smart-contract-experiment
-Simulating the smart contract execution flow a full-node
+Simulating the smart contract execution flow from within full-node

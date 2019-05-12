@@ -13,9 +13,10 @@ impl TransferContract {
    pub fn compile() -> Vec<u8> {
         let mut module_builder = ModuleBuilder::new();
 
-        let gas_counter: GlobalEntry = GlobalBuilder::new()
+        // we initialize `acc` with 0
+        let acc_var: GlobalEntry = GlobalBuilder::new()
                           .with_type(elements::ValueType::I64)
-                          .init_expr(Instruction::I64Const(10))
+                          .init_expr(Instruction::I64Const(0))
                           .mutable()
                           .build();
 
@@ -28,8 +29,8 @@ impl TransferContract {
                         .with_params(vec![elements::ValueType::I64, elements::ValueType::I64])
                         .build_sig();
 
-        let main_func_sig = SignatureBuilder::new()
-                        .with_params(vec![elements::ValueType::I64, elements::ValueType::I32, elements::ValueType::I32])
+        let run_contract_sig = SignatureBuilder::new()
+                        .with_params(vec![elements::ValueType::I64, elements::ValueType::I64, elements::ValueType::I64])
                         .with_return_type(Some(elements::ValueType::I64))
                         .build_sig();
 
@@ -43,30 +44,45 @@ impl TransferContract {
         module_builder.push_import(get_balance);
         module_builder.push_import(set_balance);
 
-        // adding `gas` global variable
-        let mut module_builder = module_builder.with_global(gas_counter);
+        // adding `acc` global variable
+        let mut module_builder = module_builder.with_global(acc_var);
 
-        let mut main_insts = Vec::new();
-        // incrementing the gas counter by 1
-        main_insts.push(Instruction::GetGlobal(0));
-        main_insts.push(Instruction::I64Const(20));
-        main_insts.push(Instruction::I64Add);
-        main_insts.push(Instruction::End);
+        let mut run_insts = Vec::new();
+        run_insts.push(Instruction::GetLocal(0));  // asking for balance for address given as input parameter #0
+        run_insts.push(Instruction::Call(0));      // calling `get_balance`
 
-        let main_body = Instructions::new(main_insts);
+        run_insts.push(Instruction::GetLocal(1));  // asking for balance for address given as input parameter #1
+        run_insts.push(Instruction::Call(0));      // calling `get_balance`
 
-        let main_func: FunctionDefinition = FunctionBuilder::new()
-                                .with_signature(main_func_sig)
-                                .body()
-                                    .with_instructions(main_body)
-                                    .build()
-                                .build();
+        // |                              |
+        // |   * top of the stack *       |
+        // |                              |
+        // | balance of address param #1  |
+        // | ---------------------------- |
+        // | balance of address param #0  |
+        // |______________________________|
 
-        module_builder.push_function(main_func);
+        run_insts.push(Instruction::I64Add);
 
-        // exporting the `main` function
-        let main_export = ExportEntry::new("main".to_string(), elements::Internal::Function(2));
-         module_builder.push_export(main_export);
+        // save (balance of address #0) + (balance of address #1) into `acc
+        run_insts.push(Instruction::SetGlobal(0));
+
+        // return the value of `acc`
+        run_insts.push(Instruction::GetGlobal(0));
+        run_insts.push(Instruction::End);
+
+        let run_func = FunctionBuilder::new()
+                        .with_signature(run_contract_sig)
+                            .body()
+                            .with_instructions(Instructions::new(run_insts))
+                            .build()
+                        .build();
+
+        module_builder.push_function(run_func);
+
+        // exporting the `run_contract` function
+        let run_contract_export = ExportEntry::new("run_contract".to_string(), elements::Internal::Function(2));
+         module_builder.push_export(run_contract_export);
 
         // translating the module to wasm
         let module: Module = module_builder.build();
