@@ -1,0 +1,10 @@
+[package]
+name = "smart-contract-experiment"
+version = "0.0.1"
+authors = ["Yaron Wittenstein <yaron.wittenstein@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+parity-wasm = "0.35"
+wabt = "0.7.4"
+wasmer-runtime = "0.4.1"
