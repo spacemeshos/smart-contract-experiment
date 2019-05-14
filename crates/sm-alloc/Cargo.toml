@@ -1,0 +1,17 @@
+[package]
+name = "sm-alloc"
+version = "0.0.10"
+authors = ["Yaron Wittenstein <yaron.wittenstein@gmail.com>"]
+edition = "2018"
+
+[lib]
+path = "src/lib.rs"
+crate-type = ["cdylib"]
+
+[profile.release]
+panic = "abort"
+opt-level = 3
+debug = false
+
+[dependencies]
+wee_alloc = { version = "0.4.4", default-features = true }

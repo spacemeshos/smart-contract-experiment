@@ -1,4 +1,4 @@
-use super::transfer_contract::TransferContract;
+use super::manual_contract::ManualContract;
 use wasmer_runtime::{func, imports, instantiate, Ctx, Instance, Value};
 
 pub struct ContractExecutor;
@@ -43,8 +43,9 @@ mod tests {
     }
 
     #[test]
+    #[ignore]
     fn test_contract_executor() {
-        let wasm = TransferContract::compile();
+        let wasm = ManualContract::compile();
 
         let instance = ContractExecutor::instantiate(&wasm);
 

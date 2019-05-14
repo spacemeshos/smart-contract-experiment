@@ -1,5 +1,5 @@
 [package]
-name = "contracts"
+name = "smart-contract-experiment"
 version = "0.0.1"
 authors = ["Yaron Wittenstein <yaron.wittenstein@gmail.com>"]
 edition = "2018"
