@@ -1,2 +1,4 @@
 target
+wapm_packages
 wapm.lock
+crates/*.wasm
