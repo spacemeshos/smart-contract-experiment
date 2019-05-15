@@ -5,7 +5,8 @@ authors = ["Yaron Wittenstein <yaron.wittenstein@gmail.com>"]
 edition = "2018"
 
 [lib]
-crate-type = ["cdylib", "dylib"]
+path = "src/lib.rs"
+crate-type = ["cdylib"]
 
 [profile.release]
 panic = "abort"
@@ -13,4 +14,4 @@ opt-level = 3
 debug = false
 
 [dependencies]
-sm-alloc = { path = "../sm-alloc" }
+# sm-alloc = { path = "../sm-alloc" }

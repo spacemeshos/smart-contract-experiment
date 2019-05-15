@@ -6,12 +6,13 @@ edition = "2018"
 
 [lib]
 path = "src/lib.rs"
-crate-type = ["cdylib", "dylib"]
+crate-type = ["staticlib"]
 
 [profile.release]
 panic = "abort"
-opt-level = 3
+opt-level = "z"
 debug = false
 
 [dependencies]
+cfg-if = "0.1.7"
 wee_alloc = { version = "0.4.4", default-features = true }

@@ -1,29 +1,11 @@
-#![no_std]
-#![feature(alloc_error_handler)]
+#[macro_use]
+extern crate cfg_if;
 
-use core::alloc::{GlobalAlloc, Layout};
-
-extern crate wee_alloc;
-
-#[global_allocator]
-static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-
-#[no_mangle]
-#[inline(never)]
-pub fn sm_alloc(size: i32) -> i64 {
-    let layout = Layout::from_size_align(size as usize, 4).unwrap();
-
-    let ptr = unsafe { ALLOC.alloc(layout) };
-
-    ptr as i64
-}
-
-#[panic_handler]
-fn panic(_info: &core::panic::PanicInfo) -> ! {
-    loop {}
-}
-
-#[alloc_error_handler]
-fn foo(_: core::alloc::Layout) -> ! {
-    loop {}
+cfg_if! {
+    if #[cfg(test)] {
+        include!("with_std.rs");
+    }
+    else {
+        include!("no_std.rs");
+    }
 }

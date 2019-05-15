@@ -1,11 +1,11 @@
 (module
   (type (;0;) (func (param i32) (result i64)))
   (type (;1;) (func))
-  (type (;2;) (func (result i32)))
+  (type (;2;) (func (param i32) (result i32)))
   (import "env" "sm_alloc" (func $sm_alloc (type 0)))
   (func $__wasm_call_ctors (type 1))
-  (func $create_addr32 (type 2) (result i32)
-    i32.const 32
+  (func $create_addr (type 2) (param i32) (result i32)
+    local.get 0
     call $sm_alloc
     i32.wrap_i64)
   (table (;0;) 1 1 funcref)
@@ -16,4 +16,4 @@
   (export "memory" (memory 0))
   (export "__heap_base" (global 1))
   (export "__data_end" (global 2))
-  (export "create_addr32" (func $create_addr32)))
+  (export "create_addr" (func $create_addr)))
