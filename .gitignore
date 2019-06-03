@@ -2,3 +2,5 @@ target
 wapm_packages
 wapm.lock
 crates/*.wasm
+sm-wasm-modules/*.wasm
+vendor
