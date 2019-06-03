@@ -1,6 +1,6 @@
 package state
 
-import "github.com/YaronWittenstein/smart-contract-experiment/address"
+import "github.com/spacemeshos/smart-contract-experiment/address"
 
 type GlobalState struct {
 	accounts map[address.Address]*Account

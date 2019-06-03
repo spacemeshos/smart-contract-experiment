@@ -9,8 +9,8 @@ import "C"
 import (
 	"fmt"
 	"unsafe"
-	"github.com/YaronWittenstein/smart-contract-experiment/address"
-	"github.com/YaronWittenstein/smart-contract-experiment/state"
+	"github.com/spacemeshos/smart-contract-experiment/address"
+	"github.com/spacemeshos/smart-contract-experiment/state"
 	wasm "github.com/wasmerio/go-ext-wasm/wasmer"
 )
 

@@ -1,4 +1,4 @@
-module github.com/YaronWittenstein/smart-contract-experiment
+module github.com/spacemeshos/smart-contract-experiment
 
 go 1.12
 
