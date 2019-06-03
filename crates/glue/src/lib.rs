@@ -7,8 +7,8 @@ mod tests {
     use std::cell::Cell;
     use wasmer_runtime::{compile, func, imports, Ctx, Instance, Memory, Module, Value};
 
-    static SM_ALLOC_WASM: &'static [u8] = include_bytes!("../../wasm-modules/sm_alloc.wasm");
-    static SM_ADDR_WASM: &'static [u8] = include_bytes!("../../wasm-modules/sm_address.wasm");
+    static SM_ALLOC_WASM: &'static [u8] = include_bytes!("../../../sm-wasm-modules/sm_alloc.wasm");
+    static SM_ADDR_WASM: &'static [u8] = include_bytes!("../../../sm-wasm-modules/sm_address.wasm");
 
     #[test]
     fn test_sm_malloc() {

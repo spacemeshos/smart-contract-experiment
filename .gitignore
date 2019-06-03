@@ -4,3 +4,4 @@ wapm.lock
 crates/*.wasm
 sm-wasm-modules/*.wasm
 vendor
+.DS_Store
