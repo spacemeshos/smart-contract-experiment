@@ -3,18 +3,18 @@
   (type (;1;) (func (param i32 i32 i32)))
   (type (;2;) (func))
   (type (;3;) (func (param i32 i32 i32 i32) (result i32)))
-  (import "env" "get_balance" (func $get_balance (type 0)))
-  (import "env" "set_balance" (func $set_balance (type 1)))
+  (import "env" "sm_vm_get_balance" (func $sm_vm_get_balance (type 0)))
+  (import "env" "sm_vm_set_balance" (func $sm_vm_set_balance (type 1)))
   (func $__wasm_call_ctors (type 2))
   (func $transfer (type 3) (param i32 i32 i32 i32) (result i32)
     (local i32 i32 i32 i32)
     local.get 0
     local.get 2
-    call $get_balance
+    call $sm_vm_get_balance
     local.set 4
     local.get 1
     local.get 2
-    call $get_balance
+    call $sm_vm_get_balance
     local.set 5
     i32.const -1
     local.set 6
@@ -35,11 +35,11 @@
       local.get 4
       local.get 3
       i32.sub
-      call $set_balance
+      call $sm_vm_set_balance
       local.get 1
       local.get 2
       local.get 7
-      call $set_balance
+      call $sm_vm_set_balance
       i32.const 0
       local.set 6
     end
